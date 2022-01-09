@@ -3,5 +3,5 @@
 module.exports = utils;
 
 function utils() {
-    // TODO
+    console.log('jeff9511-cli utils');
 }

@@ -4,7 +4,7 @@
   "description": "jeff9511-cli core",
   "author": "jeff9511 <870355761@qq.com>",
   "homepage": "",
-  "license": "ISC",
+  "license": "MIT",
   "main": "lib/index.js",
   "bin": {
     "jeff-cli": "bin/index.js"
@@ -20,10 +20,9 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@jeff9511-cli/utils": "^1.0.3"
+    "@jeff9511-cli/utils": "file:../utils"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "gitHead": "ba66de8fa69fbd1e83e295b286f7bb11cba13b54"
+  }
 }

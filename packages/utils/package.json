@@ -4,7 +4,7 @@
   "description": "jeff9511-cli utils",
   "author": "jeff9511 <870355761@qq.com>",
   "homepage": "",
-  "license": "ISC",
+  "license": "MIT",
   "main": "lib/index.js",
   "directories": {
     "lib": "lib",
