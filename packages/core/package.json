@@ -1,6 +1,6 @@
 {
   "name": "@jeff9511-cli/core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "jeff9511-cli core",
   "author": "jeff9511 <870355761@qq.com>",
   "homepage": "",
@@ -17,6 +17,6 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@jeff9511-cli/utils": "^1.0.0"
+    "@jeff9511-cli/utils": "^1.0.1"
   }
 }
