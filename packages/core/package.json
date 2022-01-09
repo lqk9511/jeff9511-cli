@@ -21,5 +21,9 @@
   },
   "dependencies": {
     "@jeff9511-cli/utils": "^1.0.1"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "ba66de8fa69fbd1e83e295b286f7bb11cba13b54"
 }
