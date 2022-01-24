@@ -20,7 +20,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@jeff9511-cli/utils": "file:../utils"
+    "@jeff9511-cli/utils": "file:../../utils/utils"
   },
   "publishConfig": {
     "access": "public"
