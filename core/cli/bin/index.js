@@ -1,6 +1,9 @@
 #! /usr/bin/env node
 
-const utils = require('@jeff9511-cli/utils')
+const importLocal = require('import-local')
 
-console.log('hello jeff cli');
-utils();
+if (importLocal(__filename)) {
+  require('npmlog').info('cli', 'using local version of jeff9511-cli');
+} else {
+  require('../lib')(process.argv.slice(2));
+}
