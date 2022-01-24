@@ -7,6 +7,8 @@ const pkg = require('../package.json')
 const constant = require('./const')
 const semver = require('semver')
 const colors = require('colors/safe')
+const userHome = require('user-home')
+const pathExists = require('path-exists').sync
 
 function core() {
   try {
@@ -16,6 +18,12 @@ function core() {
   } catch (error) {
     log.error(error.message)
   }
+}
+
+function checkUserHome() {
+    if(!userHome || !pathExists(userHome)) {
+        throw new Error(colors.red('当前登录用户主目录不存在'))
+    }
 }
 
 function checkRoot() {
