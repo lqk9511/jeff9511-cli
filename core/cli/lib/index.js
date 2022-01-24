@@ -12,9 +12,15 @@ function core() {
   try {
     checkPkgVersion()
     checkNodeVersion()
+    checkRoot()
   } catch (error) {
     log.error(error.message)
   }
+}
+
+function checkRoot() {
+    const rootCheck = require('root-check')
+    rootCheck();
 }
 
 function checkNodeVersion() {
@@ -32,6 +38,5 @@ function checkNodeVersion() {
 }
 
 function checkPkgVersion() {
-  console.log(pkg.version)
   log.notice('cli', pkg.version)
 }
