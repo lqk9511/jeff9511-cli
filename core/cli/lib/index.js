@@ -2,6 +2,7 @@
 
 module.exports = core
 
+const path = require('path')
 const log = require('@jeff9511-cli/log')
 const pkg = require('../package.json')
 const constant = require('./const')
@@ -10,7 +11,7 @@ const colors = require('colors/safe')
 const userHome = require('user-home')
 const pathExists = require('path-exists').sync
 
-let args
+let args, config
 
 function core() {
   try {
@@ -19,10 +20,34 @@ function core() {
     checkRoot()
     checkUserHome()
     checkInputArgs()
-    log.verbose('debug', 'test debug log')
+    checkEnv()
   } catch (error) {
     log.error(error.message)
   }
+}
+
+function checkEnv() {
+  const dotenv = require('dotenv')
+  const dotenvPath = path.resolve(userHome, '.env')
+  if (pathExists(dotenvPath)) {
+    dotenv.config({
+      path: dotenvPath
+    })
+  }
+  createDefaultConfig()
+  log.verbose('环境变量', process.env.CLI_HOME_PATH)
+}
+
+function createDefaultConfig() {
+  const cliConfig = {
+    home: userHome
+  }
+  if (process.env.CLI_HOME) {
+    cliConfig.cliHome = path.join(userHome, process.env.CLI_HOME)
+  } else {
+    cliConfig.cliHome = path.join(userHome, constant.DEFAULT_CLI_HOME)
+  }
+  process.env.CLI_HOME_PATH = cliConfig.cliHome
 }
 
 function checkInputArgs() {
