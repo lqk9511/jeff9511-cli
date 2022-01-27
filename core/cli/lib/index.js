@@ -21,9 +21,24 @@ function core() {
     checkUserHome()
     checkInputArgs()
     checkEnv()
+    checkGlobalUpdate()
   } catch (error) {
     log.error(error.message)
   }
+}
+
+async function checkGlobalUpdate() {
+  // 1. 获取当前版本号和模块名
+  const currentVersion = pkg.version
+  const npmName = pkg.name
+  // 2. 利用 npm 提供的api 获取所有线上的版本
+  const { getNpmInfo } = require('@jeff9511-cli/get-npm-info')
+  const data = await getNpmInfo(npmName)
+  console.log("🚀 ~ file: index.js ~ line 37 ~ checkGlobalUpdate ~ data", data)
+  
+  // 3. 提取所有版本号，比对哪些版本号是大于当前版本号
+  
+  // 4. 获取最新版本号，提示用户更新到最新版
 }
 
 function checkEnv() {
