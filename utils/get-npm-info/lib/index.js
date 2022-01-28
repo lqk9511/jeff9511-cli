@@ -30,6 +30,32 @@ function getDefaultRegistry(isOriginal = false) {
     : 'https://registry.npm.taobao.org'
 }
 
+async function getNpmVersions(npmName, registry) {
+  const data = await getNpmInfo(npmName, registry)
+  if (data) {
+    return Object.keys(data.versions)
+  }
+  return []
+}
+
+function getSemverVersion(baseVersion, versions = []) {
+  return versions
+    .filter((version) => semver.satisfies(version, `^${baseVersion}`))
+    .sort((a, b) => semver.gt(a, b))
+}
+
+async function getNpmLatestVersions(baseVersion, npmName, registry) {
+  const versions = await getNpmVersions(npmName, registry)
+  const latestVersions = getSemverVersion(baseVersion, versions)
+  if (latestVersions.length) {
+    return latestVersions[0]
+  }
+  return latestVersions
+}
+
 module.exports = {
-  getNpmInfo
+  getNpmInfo,
+  getNpmVersions,
+  getSemverVersion,
+  getNpmLatestVersions
 }
