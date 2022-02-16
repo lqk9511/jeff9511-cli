@@ -10,8 +10,12 @@ const semver = require('semver')
 const colors = require('colors/safe')
 const userHome = require('user-home')
 const pathExists = require('path-exists').sync
+const commander = require('commander')
 
-let args, config
+let args
+
+// 实例化一个脚手架对象
+const program = new commander.Command()
 
 async function core() {
   try {
@@ -19,11 +23,50 @@ async function core() {
     checkNodeVersion()
     checkRoot()
     checkUserHome()
-    checkInputArgs()
+    // checkInputArgs()
     checkEnv()
     await checkGlobalUpdate()
+    registerCommand()
   } catch (error) {
     log.error(error.message)
+  }
+}
+
+function registerCommand() {
+  // 注册
+  program
+    .name(Object.keys(pkg.bin)[0])
+    .usage('<command> [options]')
+    .version(pkg.version)
+    .option('-d --debug', '是否开启调试模式', false)
+
+  const options = program.opts()
+  // debug 模式
+  program.on('option:debug', function () {
+    if (options.debug) {
+      process.env.LOG_LEVEL = 'verbose'
+    } else {
+      process.env.LOG_LEVEL = 'info'
+    }
+
+    log.level = process.env.LOG_LEVEL
+  })
+
+  // 未知命令监听
+  program.on('command:*', function (input) {
+    const availableCommands = program.commands.map((cmd) => cmd.name())
+    log.error(`未知的命令：${input}`)
+    if (availableCommands.length) {
+      log.success(`可用的命令：${availableCommands}`)
+    }
+  })
+
+  // 解析参数
+  program.parse(process.argv)
+
+  // 空命令参数提示
+  if (program.args && program.args.length < 1) {
+    program.outputHelp()
   }
 }
 
