@@ -11,6 +11,7 @@ const colors = require('colors/safe')
 const userHome = require('user-home')
 const pathExists = require('path-exists').sync
 const commander = require('commander')
+const init = require('../../../commands/init/lib')
 
 let args
 
@@ -39,6 +40,12 @@ function registerCommand() {
     .usage('<command> [options]')
     .version(pkg.version)
     .option('-d --debug', '是否开启调试模式', false)
+
+  // 注册命令
+  program
+    .command('init [projectName]')
+    .option('-f --fore', '是否强制初始化项目')
+    .action(init)
 
   const options = program.opts()
   // debug 模式

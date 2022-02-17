@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@jeff9511-cli/get-npm-info": "file:../../utils/get-npm-info",
+    "@jeff9511-cli/init": "file:../../commands/init",
     "@jeff9511-cli/log": "file:../../utils/log",
     "@jeff9511-cli/utils": "file:../../utils/utils",
     "colors": "^1.4.0",
