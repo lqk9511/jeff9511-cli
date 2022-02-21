@@ -13,21 +13,14 @@ const pathExists = require('path-exists').sync
 const commander = require('commander')
 const init = require('../../../commands/init/lib')
 
-let args
-
 // 实例化一个脚手架对象
 const program = new commander.Command()
 
 async function core() {
   try {
-    checkPkgVersion()
-    checkNodeVersion()
-    checkRoot()
-    checkUserHome()
-    // checkInputArgs()
-    checkEnv()
-    await checkGlobalUpdate()
+    await prepare()
     registerCommand()
+    log.verbose(JSON.stringify(process.env, null, 2))
   } catch (error) {
     log.error(error.message)
   }
@@ -40,6 +33,7 @@ function registerCommand() {
     .usage('<command> [options]')
     .version(pkg.version)
     .option('-d --debug', '是否开启调试模式', false)
+    .option('-tp --targetPath <targetPath>', '是否制定本地调试文件路径', '')
 
   // 注册命令
   program
@@ -47,16 +41,22 @@ function registerCommand() {
     .option('-f --fore', '是否强制初始化项目')
     .action(init)
 
-  const options = program.opts()
   // debug 模式
   program.on('option:debug', function () {
-    if (options.debug) {
+    const { debug } = program.opts()
+    if (debug) {
       process.env.LOG_LEVEL = 'verbose'
     } else {
       process.env.LOG_LEVEL = 'info'
     }
 
     log.level = process.env.LOG_LEVEL
+  })
+
+  // 指定 targetPath
+  program.on('option:targetPath', function () {
+    const { targetPath } = program.opts()
+    process.env.CLI_TARGET_PATH = targetPath
   })
 
   // 未知命令监听
@@ -75,6 +75,15 @@ function registerCommand() {
   if (program.args && program.args.length < 1) {
     program.outputHelp()
   }
+}
+
+async function prepare() {
+  checkPkgVersion()
+  checkNodeVersion()
+  checkRoot()
+  checkUserHome()
+  checkEnv()
+  await checkGlobalUpdate()
 }
 
 async function checkGlobalUpdate() {
@@ -108,7 +117,6 @@ function checkEnv() {
     })
   }
   createDefaultConfig()
-  log.verbose('环境变量', process.env.CLI_HOME_PATH)
 }
 
 function createDefaultConfig() {
@@ -121,22 +129,6 @@ function createDefaultConfig() {
     cliConfig.cliHome = path.join(userHome, constant.DEFAULT_CLI_HOME)
   }
   process.env.CLI_HOME_PATH = cliConfig.cliHome
-}
-
-function checkInputArgs() {
-  const minimist = require('minimist')
-  args = minimist(process.argv.slice(2))
-  checkArgs()
-}
-
-function checkArgs() {
-  if (args.debug) {
-    process.env.LOG_LEVEL = 'verbose'
-  } else {
-    process.env.LOG_LEVEL = 'info'
-  }
-
-  log.level = process.env.LOG_LEVEL
 }
 
 function checkUserHome() {
