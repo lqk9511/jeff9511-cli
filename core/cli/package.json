@@ -20,6 +20,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
+    "@jeff9511-cli/exec": "file:../exec",
     "@jeff9511-cli/get-npm-info": "file:../../utils/get-npm-info",
     "@jeff9511-cli/init": "file:../../commands/init",
     "@jeff9511-cli/log": "file:../../utils/log",

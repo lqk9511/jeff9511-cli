@@ -11,7 +11,8 @@ const colors = require('colors/safe')
 const userHome = require('user-home')
 const pathExists = require('path-exists').sync
 const commander = require('commander')
-const init = require('../../../commands/init/lib')
+const init = require('@jeff9511-cli/init')
+const exec = require('@jeff9511-cli/exec')
 
 // 实例化一个脚手架对象
 const program = new commander.Command()
@@ -39,7 +40,7 @@ function registerCommand() {
   program
     .command('init [projectName]')
     .option('-f --fore', '是否强制初始化项目')
-    .action(init)
+    .action(exec)
 
   // debug 模式
   program.on('option:debug', function () {

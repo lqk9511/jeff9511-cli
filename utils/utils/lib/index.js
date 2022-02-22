@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-module.exports = utils;
+const isObject = (o) => Object.prototype.toString.call(o) === '[object Object]'
 
-function utils() {
-    console.log('jeff9511-cli utils~1');
+module.exports = {
+  isObject
 }
