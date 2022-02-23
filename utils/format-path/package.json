@@ -1,7 +1,7 @@
 {
-  "name": "@jeff9511-cli/package",
+  "name": "@jeff9511-cli/format-path",
   "version": "1.0.0",
-  "description": "jeff9511-cli npm modules",
+  "description": "jeff9511-cli format path",
   "author": "jeff9511 <870355761@qq.com>",
   "homepage": "https://github.com/lqk9511/jeff9511-cli#readme",
   "license": "MIT",
@@ -22,11 +22,6 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
-  },
-  "dependencies": {
-    "@jeff9511-cli/format-path": "file:../../utils/format-path",
-    "@jeff9511-cli/utils": "file:../../utils/utils",
-    "pkg-dir": "^5.0.0"
   },
   "bugs": {
     "url": "https://github.com/lqk9511/jeff9511-cli/issues"
