@@ -25,7 +25,9 @@
   },
   "dependencies": {
     "@jeff9511-cli/format-path": "file:../../utils/format-path",
+    "@jeff9511-cli/get-npm-info": "file:../../utils/get-npm-info",
     "@jeff9511-cli/utils": "file:../../utils/utils",
+    "npminstall": "^5.4.1",
     "pkg-dir": "^5.0.0"
   },
   "bugs": {

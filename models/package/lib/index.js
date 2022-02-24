@@ -1,7 +1,9 @@
 'use strict'
 const path = require('path')
+const npminstall = require('npminstall')
 const pkgDir = require('pkg-dir').sync
 const formatPath = require('@jeff9511-cli/format-path')
+const { getDefaultRegistry } = require('@jeff9511-cli/get-npm-info')
 
 const { isObject } = require('@jeff9511-cli/utils')
 
@@ -11,9 +13,11 @@ class Package {
 
     if (!isObject(options)) throw new Error('Package 类初始化参数必须是对象')
 
-    const { targetPath, packageName, packageVersion } = options
+    const { targetPath, storeDir, packageName, packageVersion } = options
     // package 目标路径
     this.targetPath = targetPath
+    // 缓存 package 路径
+    this.storeDir = storeDir
     // package name
     this.packageName = packageName
     // package version
@@ -22,7 +26,14 @@ class Package {
   // 判断当前 Package 是否存在
   exists() {}
   // 安装 Package
-  install() {}
+  install() {
+    return npminstall({
+      root: this.targetPath,
+      storeDir: this.storeDir,
+      registry: getDefaultRegistry(),
+      pkgs: [{ name: this.packageName, version: this.packageVersion }]
+    })
+  }
   // 更新 Package
   update() {}
   // 获取入口文件的路径
