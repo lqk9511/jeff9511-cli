@@ -2,8 +2,10 @@
 const path = require('path')
 const pathExists = require('path-exists')
 const npminstall = require('npminstall')
+const fse = require('fs-extra')
 const pkgDir = require('pkg-dir').sync
 const formatPath = require('@jeff9511-cli/format-path')
+const log = require('@jeff9511-cli/log')
 const {
   getNpmLatestVersion,
   getDefaultRegistry
@@ -37,7 +39,17 @@ class Package {
     )
   }
 
+  getSpecificCacheFilePath(version) {
+    return path.resolve(
+      this.storeDir,
+      `_${this.cacheFilePathPrefix}@${version}@${this.packageName}`
+    )
+  }
+
   async prepare() {
+    if (this.storeDir && !pathExists(this.storeDir)) {
+      fse.mkdirSync(this.storeDir)
+    }
     if (this.packageVersion === 'latest') {
       this.packageVersion = await getNpmLatestVersion(this.packageName)
     }
@@ -63,7 +75,26 @@ class Package {
     })
   }
   // 更新 Package
-  update() {}
+  async update() {
+    await this.prepare()
+    // 获取最新 npm 模块版本号
+    const latestVersion = await getNpmLatestVersion(this.packageName)
+    // 查询最新版本号对应的文件路径是否存在
+    const latestFilePath = this.getSpecificCacheFilePath(latestVersion)
+    // 如果不存在则直接安装最新版本
+    if (!pathExists(latestFilePath)) {
+      await npminstall({
+        root: this.targetPath,
+        storeDir: this.storeDir,
+        registry: getDefaultRegistry(),
+        pkgs: [{ name: this.packageName, version: latestVersion }]
+      })
+
+      this.packageVersion = latestVersion
+    } else {
+      log.info(`${this.packageName} 已经是最新版本: ${latestVersion}`)
+    }
+  }
   // 获取入口文件的路径
   getRootFilePath() {
     // 1. 获取 package.json 所在目录 - pkg-dir

@@ -26,7 +26,9 @@
   "dependencies": {
     "@jeff9511-cli/format-path": "file:../../utils/format-path",
     "@jeff9511-cli/get-npm-info": "file:../../utils/get-npm-info",
+    "@jeff9511-cli/log": "file:../../utils/log",
     "@jeff9511-cli/utils": "file:../../utils/utils",
+    "fs-extra": "^7.0.1",
     "npminstall": "^5.4.1",
     "path-exists": "^4.0.0",
     "pkg-dir": "^5.0.0"
