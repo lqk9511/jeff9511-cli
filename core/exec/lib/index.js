@@ -3,7 +3,7 @@ const Package = require('@jeff9511-cli/package')
 const path = require('path')
 
 const SETTINGS = {
-  init: '@jeff9511-cli/init'
+  init: '@jeff9511-cli/utils'
 }
 
 const CACHE_DIR = 'dependencies/'
@@ -22,8 +22,9 @@ async function exec() {
     targetPath = path.resolve(homePath, CACHE_DIR) // 生成缓存路径
     storeDir = path.resolve(targetPath, 'node_modules')
     pkg = new Package({ targetPath, storeDir, packageName, packageVersion })
-    if (pkg.exists()) {
+    if (await pkg.exists()) {
       // 更新 package
+      pkg.update()
     } else {
       // 安装 package
       await pkg.install()

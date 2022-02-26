@@ -28,6 +28,7 @@
     "@jeff9511-cli/get-npm-info": "file:../../utils/get-npm-info",
     "@jeff9511-cli/utils": "file:../../utils/utils",
     "npminstall": "^5.4.1",
+    "path-exists": "^4.0.0",
     "pkg-dir": "^5.0.0"
   },
   "bugs": {

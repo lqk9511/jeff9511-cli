@@ -53,10 +53,19 @@ async function getNpmLatestVersions(baseVersion, npmName, registry) {
   return latestVersions
 }
 
+async function getNpmLatestVersion(npmName, registry) {
+  let versions = await getNpmVersions(npmName, registry)
+  if (versions.length) {
+    return versions.sort((a, b) => semver.gt(a, b))[0]
+  }
+  return null
+}
+
 module.exports = {
   getNpmInfo,
   getNpmVersions,
   getSemverVersion,
   getDefaultRegistry,
+  getNpmLatestVersion,
   getNpmLatestVersions
 }
