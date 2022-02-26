@@ -97,8 +97,14 @@ class Package {
   }
   // 获取入口文件的路径
   getRootFilePath() {
+    let targetPath = ''
+    if(this.targetPath) {
+      targetPath = this.targetPath
+    } else {
+      targetPath = this.cacheFilePath
+    }
     // 1. 获取 package.json 所在目录 - pkg-dir
-    const dir = pkgDir(this.targetPath)
+    const dir = pkgDir(targetPath)
     if (dir) {
       // 2. 读取 package.json
       const pkgFile = require(path.resolve(dir, 'package.json'))
