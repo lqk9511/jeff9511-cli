@@ -21,7 +21,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@jeff9511-cli/command": "file:../../models/command"
+    "@jeff9511-cli/command": "file:../../models/command",
+    "@jeff9511-cli/log": "file:../../utils/log"
   },
   "bugs": {
     "url": "https://github.com/lqk9511/jeff9511-cli/issues"

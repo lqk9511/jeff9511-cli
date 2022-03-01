@@ -36,11 +36,13 @@ async function exec() {
 
   const rootFile = pkg.getRootFilePath()
   if (rootFile) {
-    // 在当前进程中调用
-    require(rootFile).call(null, Array.from(arguments))
-    // 在 node 子进程中调用
-  } else {
-    log.error('文件根路径不存在！')
+    try {
+      // 在当前进程中调用
+      require(rootFile).call(null, Array.from(arguments))
+      // 在 node 子进程中调用
+    } catch (error) {
+      log.error(error)
+    }
   }
 
   // 1. targetPath -> modulePath
