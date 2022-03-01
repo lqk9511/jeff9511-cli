@@ -1,7 +1,7 @@
 {
-  "name": "@jeff9511-cli/exec",
+  "name": "@jeff9511-cli/command",
   "version": "1.0.0",
-  "description": "jeff9511-cli execute package",
+  "description": "jeff9511-cli command",
   "author": "jeff9511 <870355761@qq.com>",
   "homepage": "https://github.com/lqk9511/jeff9511-cli#readme",
   "license": "MIT",
@@ -23,11 +23,11 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
-  "dependencies": {
-    "@jeff9511-cli/log": "file:../../utils/log",
-    "@jeff9511-cli/package": "file:../../models/package"
-  },
   "bugs": {
     "url": "https://github.com/lqk9511/jeff9511-cli/issues"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "semver": "^7.3.5"
   }
 }

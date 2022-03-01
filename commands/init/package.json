@@ -20,6 +20,9 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
+  "dependencies": {
+    "@jeff9511-cli/command": "file:../../models/command"
+  },
   "bugs": {
     "url": "https://github.com/lqk9511/jeff9511-cli/issues"
   }

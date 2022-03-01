@@ -1,9 +1,16 @@
 'use strict'
 
-module.exports = init
+const Command = require('@jeff9511-cli/command')
 
-function init(projectName, options, command) {
-  console.log('🚀 ~ file: index.js ~ line 6 ~ init ~ projectName', projectName)
-  console.log('🚀 ~ file: index.js ~ line 6 ~ init ~ options', options)
-  console.log('🚀 ~ file: index.js ~ line 6 ~ init ~ command', command.optsWithGlobals())
+class InitCommand extends Command {
+
 }
+
+function init(args) {
+  return new InitCommand(args)
+}
+
+
+module.exports = init
+module.exports.InitCommand = InitCommand
+

@@ -1,6 +1,7 @@
 'use strict'
 const Package = require('@jeff9511-cli/package')
 const path = require('path')
+const log = require('@jeff9511-cli/log')
 
 const SETTINGS = {
   init: '@jeff9511-cli/utils'
@@ -35,7 +36,11 @@ async function exec() {
 
   const rootFile = pkg.getRootFilePath()
   if (rootFile) {
-    require(rootFile).apply(null, arguments)
+    // 在当前进程中调用
+    require(rootFile).call(null, Array.from(arguments))
+    // 在 node 子进程中调用
+  } else {
+    log.error('文件根路径不存在！')
   }
 
   // 1. targetPath -> modulePath

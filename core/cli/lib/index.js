@@ -80,7 +80,6 @@ function registerCommand() {
 
 async function prepare() {
   checkPkgVersion()
-  checkNodeVersion()
   checkRoot()
   checkUserHome()
   checkEnv()
@@ -141,20 +140,6 @@ function checkUserHome() {
 function checkRoot() {
   const rootCheck = require('root-check')
   rootCheck()
-}
-
-function checkNodeVersion() {
-  // 获取当前 node 版本号
-  const currentVersion = process.version
-
-  // 比对最低版本号
-  const lowestVersion = constant.LOWEST_NODE_VERSION
-
-  if (!semver.gte(currentVersion, lowestVersion)) {
-    throw new Error(
-      colors.red(`jeff-cli 需要安装 v${lowestVersion} 以上版本的 Node.js`)
-    )
-  }
 }
 
 function checkPkgVersion() {
