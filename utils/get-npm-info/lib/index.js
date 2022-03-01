@@ -9,7 +9,7 @@ function getNpmInfo(npmName, registry) {
     return null
   }
 
-  const _registry = registry || getDefaultRegistry(true)
+  const _registry = registry || getDefaultRegistry()
   const npmInfoUrl = urlJoin(_registry, npmName)
   return axios
     .get(npmInfoUrl)
