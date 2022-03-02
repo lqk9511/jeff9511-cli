@@ -2,6 +2,7 @@
 const Package = require('@jeff9511-cli/package')
 const path = require('path')
 const log = require('@jeff9511-cli/log')
+const cp = require('child_process')
 
 const SETTINGS = {
   init: '@jeff9511-cli/utils'
@@ -38,8 +39,36 @@ async function exec() {
   if (rootFile) {
     try {
       // 在当前进程中调用
-      require(rootFile).call(null, Array.from(arguments))
+      // require(rootFile).call(null, Array.from(arguments))
       // 在 node 子进程中调用
+      const args = Array.from(arguments)
+      const cmd = args[args.length - 1]
+      const o = Object.create(null)
+      Object.keys(cmd).forEach((key) => {
+        if (
+          cmd.hasOwnProperty(key) &&
+          key !== 'parent' &&
+          !key.startsWith('_')
+        ) {
+          o[key] = cmd[key]
+        }
+      })
+      o.opts = cmd.opts()
+      args[args.length - 1] = o
+      const code = `require('${rootFile}').call(null, ${JSON.stringify(args)})`
+      const child = cp.spawn('node', ['-e', code], {
+        cwd: process.cwd(),
+        stdio: 'inherit'
+      })
+      child.on('error', (error) => {
+        log.error(error)
+        process.exit(1)
+      })
+
+      child.on('exit', (e) => {
+        log.verbose(`程序执行成功：${e}`)
+        process.exit(0)
+      })
     } catch (error) {
       log.error(error)
     }

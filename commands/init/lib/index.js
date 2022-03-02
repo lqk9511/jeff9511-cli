@@ -7,7 +7,11 @@ class InitCommand extends Command {
   init() {
     this.projectName = this._args[0] || ''
     log.verbose("🚀 ~ file: index.js ~ line 8 ~ InitCommand ~ init ~ this.projectName", this.projectName)
-    this.force = this._cmd.opts().force
+    if(typeof this._cmd.opts === 'function') {
+      this.force = this._cmd.opts().force
+    }else {
+      this.force = this._cmd.opts.force
+    }
     log.verbose("🚀 ~ file: index.js ~ line 10 ~ InitCommand ~ init ~ this.force", this.force)
   }
 
