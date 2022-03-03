@@ -56,7 +56,7 @@ async function exec() {
       o.opts = cmd.opts()
       args[args.length - 1] = o
       const code = `require('${rootFile}').call(null, ${JSON.stringify(args)})`
-      const child = cp.spawn('node', ['-e', code], {
+      const child = spawn('node', ['-e', code], {
         cwd: process.cwd(),
         stdio: 'inherit'
       })
@@ -79,6 +79,13 @@ async function exec() {
   // 3. Package.getRootFile(获取入口文件)
   // 封装 -> 复用
   // 4. Package.update / Package.install
+}
+
+function spawn(command, args, options) {
+  const win32 = process.platform === 'win32'
+  const cmd = win32 ? 'cmd' : command
+  const cmdArgs = win32 ? ['/c'].concat(command, args) : args
+  return cp.spawn(cmd, cmdArgs, options || {})
 }
 
 module.exports = exec
